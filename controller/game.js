@@ -6,7 +6,7 @@ const SLICER_SPEED = 100
 const SKELETOR_SPEED = 60
   
 
-k.loadRoot("./img/sprites/");
+k.loadRoot("../img/sprites/");
 k.loadSprite("link-left", "link-left.png");
 k.loadSprite("link-right", "link-right.png");
 k.loadSprite("link-down", "link-down.png");
@@ -30,7 +30,7 @@ k.loadSprite("stairs", "stairs.png");
 k.loadSprite("bg", "bg.png");
 
 k.scene('game', ({ level, score }) => {
-  layers(['bg', 'obj', 'ui'], 'obj')
+  k.layers(['bg', 'obj', 'ui'], 'obj')
 
   const maps = [
     [
@@ -60,44 +60,44 @@ k.scene('game', ({ level, score }) => {
   const levelCfg = {
     width: 48,
     height: 48,
-    a: [sprite('left-wall'), solid(), 'wall'],
-    b: [sprite('right-wall'), solid(), 'wall'],
-    c: [sprite('top-wall'), solid(), 'wall'],
-    d: [sprite('bottom-wall'), solid(), 'wall'],
-    w: [sprite('top-right-wall'), solid(), 'wall'],
-    x: [sprite('bottom-left-wall'), solid(), 'wall'],
-    y: [sprite('top-left-wall'), solid(), 'wall'],
-    z: [sprite('bottom-right-wall'), solid(), 'wall'],
-    '%': [sprite('left-door'), solid(), 'door'],
-    '^': [sprite('top-door'), 'next-level'],
-    $: [sprite('stairs'), 'next-level'],
-    '*': [sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
-    '}': [sprite('skeletor'), 'dangerous', 'skeletor', { dir: -1, timer: 0 }],
-    ')': [sprite('lanterns'), solid()],
-    '(': [sprite('fire-pot'), solid()],
+    a: [k.sprite('left-wall'), k.solid(), 'wall'],
+    b: [k.sprite('right-wall'), k.solid(), 'wall'],
+    c: [k.sprite('top-wall'), k.solid(), 'wall'],
+    d: [k.sprite('bottom-wall'), k.solid(), 'wall'],
+    w: [k.sprite('top-right-wall'), k.solid(), 'wall'],
+    x: [k.sprite('bottom-left-wall'), k.solid(), 'wall'],
+    y: [k.sprite('top-left-wall'), k.solid(), 'wall'],
+    z: [k.sprite('bottom-right-wall'), k.solid(), 'wall'],
+    '%': [k.sprite('left-door'), k.solid(), 'door'],
+    '^': [k.sprite('top-door'), 'next-level'],
+    $: [k.sprite('stairs'), 'next-level'],
+    '*': [k.sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
+    '}': [k.sprite('skeletor'), 'dangerous', 'skeletor', { dir: -1, timer: 0 }],
+    ')': [k.sprite('lanterns'), k.solid()],
+    '(': [k.sprite('fire-pot'), k.solid()],
   }
-  addLevel(maps[level], levelCfg)
+  k.addLevel(maps[level], levelCfg)
 
-  add([sprite('bg'), layer('bg')])
+  k.add([k.sprite('bg'), k.layer('bg')])
 
-  const scoreLabel = add([
-    text('0'),
-    pos(400, 450),
-    layer('ui'),
+  const scoreLabel = k.add([
+    k.text('0'),
+    k.pos(400, 450),
+    k.layer('ui'),
     {
       value: score,
     },
-    scale(2),
+    k.scale(2),
   ])
 
-  add([text('level ' + parseInt(level + 1)), pos(400, 465), scale(2)])
+  k.add([k.text('level ' + parseInt(level + 1)), k.pos(400, 465), k.scale(2)])
 
-  const player = add([
-    sprite('link-right'),
-    pos(5, 190),
+  const player = k.add([
+    k.sprite('link-right'),
+    k.pos(5, 190),
     {
       // right by default
-      dir: vec2(1, 0),
+      dir: k.vec2(1, 0),
     },
   ])
 
@@ -112,64 +112,64 @@ k.scene('game', ({ level, score }) => {
     })
   })
 
-  keyDown('left', () => {
+  k.keyDown('left', () => {
     player.changeSprite('link-left')
     player.move(-MOVE_SPEED, 0)
-    player.dir = vec2(-1, 0)
+    player.dir = k.vec2(-1, 0)
   })
 
-  keyDown('right', () => {
+  k.keyDown('right', () => {
     player.changeSprite('link-right')
     player.move(MOVE_SPEED, 0)
-    player.dir = vec2(1, 0)
+    player.dir = k.vec2(1, 0)
   })
 
-  keyDown('up', () => {
+  k.keyDown('up', () => {
     player.changeSprite('link-up')
     player.move(0, -MOVE_SPEED)
-    player.dir = vec2(0, -1)
+    player.dir = k.vec2(0, -1)
   })
 
-  keyDown('down', () => {
+  k.keyDown('down', () => {
     player.changeSprite('link-down')
     player.move(0, MOVE_SPEED)
-    player.dir = vec2(0, 1)
+    player.dir = k.vec2(0, 1)
   })
 
   function spawnKaboom(p) {
-    const obj = add([sprite('kaboom'), pos(p), 'kaboom'])
+    const obj = k.add([sprite('kaboom'), k.pos(p), 'kaboom'])
     wait(1, () => {
-      destroy(obj)
+      k.destroy(obj)
     })
   }
 
-  keyPress('space', () => {
-    spawnKaboom(player.pos.add(player.dir.scale(48)))
+  k.keyPress('space', () => {
+    spawnKaboom(player.k.pos.k.add(player.dir.k.scale(48)))
   })
 
   player.collides('door', (d) => {
-    destroy(d)
+    k.destroy(d)
   })
 
-  collides('kaboom', 'skeletor', (k,s) => {
+  k.collides('kaboom', 'skeletor', (k,s) => {
     camShake(4)
     wait(1, () => {
-      destroy(k)
+      k.destroy(k)
     })
-    destroy(s)
+    k.destroy(s)
     scoreLabel.value++
-    scoreLabel.text = scoreLabel.value
+    scoreLabel.k.text = scoreLabel.value
   })
 
-  action('slicer', (s) => {
+  k.action('slicer', (s) => {
     s.move(s.dir * SLICER_SPEED, 0)
   })
 
-  collides('slicer', 'wall', (s) => {
+  k.collides('slicer', 'wall', (s) => {
     s.dir = -s.dir
   })
 
-  action('skeletor', (s) => {
+  k.action('skeletor', (s) => {
     s.move(0, s.dir * SKELETOR_SPEED)
     s.timer -= dt()
     if (s.timer <= 0) {
@@ -178,7 +178,7 @@ k.scene('game', ({ level, score }) => {
     }
   })
 
-  collides('skeletor', 'wall', (s) => {
+  k.collides('skeletor', 'wall', (s) => {
     s.dir = -s.dir
   })
 
@@ -188,7 +188,7 @@ k.scene('game', ({ level, score }) => {
 })
 
 k.scene('lose', ({ score }) => {
-  add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
+  k.add([k.text(score, 32), origin('center'), k.pos(width() / 2, height() / 2)])
 })
 
 k.start('game', { level: 0, score: 0 })

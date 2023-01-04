@@ -1,10 +1,10 @@
 const k = kaboom({
-    global: true,
-    fullscreen: true,
-    scale: 1,
-    debug: true,
-    clearColor: [0, 0, 1, 1],
-    canvas: document.querySelector('.game')
-  })
+    width: 1000,
+    height: 540,
+    font: "sinko",
+    canvas: document.querySelector("#gameCanvas"),
+    background: [ 0, 0, 255, ],
+})
+
 
 export default k
