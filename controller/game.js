@@ -151,14 +151,14 @@ k.scene('game', ({ level, score }) => {
     k.destroy(d)
   })
 
-  k.collides('kaboom', 'skeletor', (k,s) => {
-    camShake(4)
-    wait(1, () => {
-      k.destroy(k)
+  k.collides('kaboom', 'skeletor', (n,s) => {
+    k.camShake(4)
+    k.wait(1, () => {
+      k.destroy(n)
     })
     k.destroy(s)
     scoreLabel.value++
-    scoreLabel.k.text = scoreLabel.value
+    scoreLabel.text = scoreLabel.value
   })
 
   k.action('slicer', (s) => {
