@@ -106,7 +106,7 @@ k.scene('game', ({ level, score }) => {
   })
 
   player.overlaps('next-level', () => {
-    go('game', {
+    k.go('game', {
       level: (level + 1) % maps.length,
       score: scoreLabel.value,
     })
@@ -137,14 +137,14 @@ k.scene('game', ({ level, score }) => {
   })
 
   function spawnKaboom(p) {
-    const obj = k.add([sprite('kaboom'), k.pos(p), 'kaboom'])
-    wait(1, () => {
+    const obj = k.add([k.sprite('kaboom'), k.pos(p), 'kaboom'])
+    k.wait(1, () => {
       k.destroy(obj)
     })
   }
 
   k.keyPress('space', () => {
-    spawnKaboom(player.k.pos.k.add(player.dir.k.scale(48)))
+    spawnKaboom(player.pos.add(player.dir.scale(48)))
   })
 
   player.collides('door', (d) => {
@@ -171,10 +171,10 @@ k.scene('game', ({ level, score }) => {
 
   k.action('skeletor', (s) => {
     s.move(0, s.dir * SKELETOR_SPEED)
-    s.timer -= dt()
+    s.timer -= k.dt()
     if (s.timer <= 0) {
       s.dir = -s.dir
-      s.timer = rand(5)
+      s.timer = k.rand(5)
     }
   })
 
@@ -183,12 +183,12 @@ k.scene('game', ({ level, score }) => {
   })
 
   player.overlaps('dangerous', () => {
-    go('lose', { score: scoreLabel.value })
+    k.go('lose', { score: scoreLabel.value })
   })
 })
 
 k.scene('lose', ({ score }) => {
-  k.add([k.text(score, 32), origin('center'), k.pos(width() / 2, height() / 2)])
+  k.add([k.text(score, 32), k.origin('center'), k.pos(k.width() / 2, k.height() / 2)])
 })
 
 k.start('game', { level: 0, score: 0 })
