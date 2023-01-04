@@ -1,3 +1,6 @@
+// to do:
+// need to fix score defaulting at 0 when going to next level
+
 import k from './kaboom.js'
 
 
@@ -34,7 +37,7 @@ k.scene('game', ({ level, score }) => {
 
   const maps = [
     [
-      'ycc)cc^ccw',
+      'ycc)cc^^cw',
       'a        b',
       'a      * b',
       'a    (   b',
