@@ -1,14 +1,9 @@
 // to do:
 // need to fix score defaulting at 0 when going to next level
-
 import k from './kaboom.js'
+import {MOVE_SPEED, SLICER_SPEED, SKELETOR_SPEED} from './speed.js'
 
-
-const MOVE_SPEED = 120
-const SLICER_SPEED = 100
-const SKELETOR_SPEED = 60
-  
-
+// import sprites
 k.loadRoot("../img/sprites/");
 k.loadSprite("link-left", "link-left.png");
 k.loadSprite("link-right", "link-right.png");
@@ -32,7 +27,7 @@ k.loadSprite("kaboom", "kaboom.png");
 k.loadSprite("stairs", "stairs.png");
 k.loadSprite("bg", "bg.png");
 
-k.scene('game', ({ level, score }) => {
+export default k.scene('game', ({ level, score }) => {
   k.layers(['bg', 'obj', 'ui'], 'obj')
 
   const maps = [
@@ -194,4 +189,3 @@ k.scene('lose', ({ score }) => {
   k.add([k.text(score, 32), k.origin('center'), k.pos(k.width() / 2, k.height() / 2)])
 })
 
-k.start('game', { level: 0, score: 0 })
