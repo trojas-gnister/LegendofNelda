@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>The Legend of Nelda Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
     <section class="hero">
         <div class="main-width">
             <header>
-                <img src="../img/Nelda.png" alt="Legend of Zelda Logo" width="270px" height="112px">
+                <img src="./assets/img/Nelda.png" alt="Legend of Zelda Logo" width="270px" height="112px">
                     <nav>
                         <ul>
                             <li><a href="#">Home</a></li>
@@ -22,7 +22,7 @@
         </div>
 
     <section class="game">
-        <canvas id="gameCanvas"></canvas>
+        <div id="gameCanvas"></div>
     </section>
 
     <section class="menu-bar">
@@ -42,8 +42,7 @@
     </footer>   
     </section>
 
-    <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
-    <script type="module" src="../controller/game.js"></script>
-    <script type="module" src="../app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.23.0/phaser.js"></script>
+    <script type= "module" src="./controller/game.js"></script>
 </body>
 </html>
