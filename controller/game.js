@@ -1,6 +1,6 @@
 // to do:
 // need to fix score defaulting at 0 when going to next level
-import k from './kaboom.js'
+import {k} from './kaboom.js'
 import {MOVE_SPEED, SLICER_SPEED, SKELETOR_SPEED} from './speed.js'
 
 // import sprites

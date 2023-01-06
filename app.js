@@ -1,6 +1,6 @@
 
-import k from './controller/kaboom.js'
-import game from './controller/game.js'
+import {k} from './controller/kaboom.js'
+
 
 
 
