@@ -1,11 +1,4 @@
 <html>
-   <title>
-    {{# if logged in}}
-        Welcome {{userName}}
-        {{else }}
-            NodeJS
-        {{/if}}
-   </title> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,14 +16,6 @@
                             <li><a href="/">Home</a></li>
                             <li><a href="/login">Log In</a></li>
                             <li><a href="/signup">Sign Up!</a></li>
-                        </ul>
-
-                        <ul>
-                            {{# if loggedin}}
-                                <li><a href="/logout">Log Out</a></li>
-                            {{else }}
-                                <li><a href="/login">Log In</a></li>
-                            {{/if}}    
                         </ul>
                     </nav>
             </header>
