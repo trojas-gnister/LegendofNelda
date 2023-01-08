@@ -2,7 +2,7 @@ var scene = new Phaser.Scene("game");
 var player;
 
 const config = {
-  width: 680,
+  width: 640,
   height: 430,
   type: Phaser.AUTO,
   scene : scene,
@@ -69,11 +69,11 @@ scene.create = function() {
     repeat: -1
 });
 
-  player = this.add.sprite(100, 300, "adventurer")
+  player = this.add.sprite(50, 238, "adventurer")
 
   player.play("idle");
 
-  this.shroom = this.add.sprite(500, 300, "shroom")
+  this.shroom = this.add.sprite(500, 250, "shroom")
   this.shroom.setScale(3.3);
 
 };
