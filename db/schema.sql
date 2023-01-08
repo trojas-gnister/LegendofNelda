@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS nelda_db;
+CREATE DATABASE nelda_db;
