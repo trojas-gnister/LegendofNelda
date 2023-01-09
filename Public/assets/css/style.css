@@ -1791,4 +1791,8 @@ nav ul li a:hover{
       align-content: center;
     }
   }
+
+  ul {
+    list-style-type: none;
+  }
   

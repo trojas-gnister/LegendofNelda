@@ -18,7 +18,9 @@ const game = new Phaser.Game(config)
 
 scene.init = function() {
 	this.score = 0;
+  document.getElementById("score").innerHTML = this.score;
 	this.lives = 3;
+  document.getElementById("lives").innerHTML = this.lives;
 	this.speed= 1.5;
     this.shroom_move = 1;
 	this.score_text;
