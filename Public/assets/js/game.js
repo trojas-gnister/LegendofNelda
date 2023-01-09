@@ -1,6 +1,22 @@
+
+
 var scene = new Phaser.Scene("game");
 var player;
 
+const updateDatabase = (score, id) => {
+  var updatedGame = {
+      score: score
+  };
+  $.ajax({
+      method: "PUT",
+      url: "/game/" + id,
+      data: updatedGame
+  }).then((data) => {
+      location.assign("/");
+  }).catch((err) => {
+      console.log(err);
+  });
+}
 
 
 const config = {
@@ -119,6 +135,8 @@ scene.update = function() {
       this.score++;
       this.shroom.destroy()
       this.scoreText.setText("Score: " + this.score);
+      updateDatabase(this.score, )
+      document.getElementById("score").innerHTML = this.score;
     }
   } 
 

@@ -947,10 +947,6 @@ nav ul li a:hover{
     padding-bottom: 1.625rem;
   }
   
-  .text-uppercase {
-    text-transform: uppercase !important;
-  }
-  
   .text-lowercase {
     text-transform: lowercase !important;
   }
