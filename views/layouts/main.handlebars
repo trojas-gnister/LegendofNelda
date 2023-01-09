@@ -4,35 +4,25 @@
     <meta charset="UTF-8">
     <title>The Legend of Nelda Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <section class="hero">
         <div class="main-width">
             <header>
-                <img src="../img/Nelda.png" alt="Legend of Zelda Logo" width="270px" height="112px">
+                <img src="/assets/img/Nelda.png" alt="Legend of Zelda Logo" width="270px" height="112px">
                     <nav>
                         <ul>
-                            <li><a href="/">Home</a></li>
+                        {{#if logged_in}}
+                            <li><a class="no-button" id="logout">logout</a></li>
+                        {{else}}
                             <li><a href="/login">Log In</a></li>
-                            <li><a href="/signup">Sign Up!</a></li>
+                        {{/if}}
                         </ul>
                     </nav>
             </header>
         </div>
-
-    <section class="game">
-        <canvas id="gameCanvas"></canvas>
-    </section>
-
-    <section class="menu-bar">
-        <div class="text">
-            <p class="title">Nelda Game<p>
-            <p>My Stats</p>
-            <p>Display Game Controls</p>
-        </div>
-    </section>
-
+    {{{ body }}}
 
 
     <footer>
@@ -41,8 +31,12 @@
         </section>
     </footer>   
     </section>
+{{#if logged_in}}
+<script type= "module" src="/assets/js/logout.js"></script>
+<script type= "module" src="/assets/js/game.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.23.0/phaser.js"></script>
+{{/if}}
 
-    <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
-    <script type="module" src="../controllers/game.js"></script>
+
 </body>
 </html>
