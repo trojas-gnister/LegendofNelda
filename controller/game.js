@@ -1,6 +1,8 @@
 var scene = new Phaser.Scene("game");
 var player;
 
+
+
 const config = {
   width: 640,
   height: 430,
@@ -69,12 +71,27 @@ scene.create = function() {
     repeat: -1
 });
 
+this.anims.create({
+  key: "attack",
+  frameRate: 7,
+  frames: this.anims.generateFrameNames("adventurer", {
+      prefix: "attack",
+      suffix: ".png",
+      start: 0,
+      end: 5,
+      zeroPad: 1
+  }),
+  repeat: 0
+});
+
+
   player = this.add.sprite(50, 238, "adventurer")
 
   player.play("idle");
 
   this.shroom = this.add.sprite(500, 250, "shroom")
   this.shroom.setScale(3.3);
+
 
 };
 
@@ -83,18 +100,25 @@ scene.create = function() {
 
 scene.update = function() {
 
+
+
+
+
+
   var cursors = this.input.keyboard.createCursorKeys();
   if (cursors.right.isDown) {
     player.x += this.speed;
     player.play('run')
     
   }
-
-  // if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), this.shroom.getBounds())) {
-  //   this.lives--;
-  // 	this.liveText.setText("Lives: " + this.lives);
-  // 	this.end();
-  // }
+  if (cursors.up.isDown) {
+    player.play('attack')
+    if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), this.shroom.getBounds())) {
+      this.score++;
+      this.shroom.destroy()
+      this.scoreText.setText("Score: " + this.score);
+    }
+  } 
 
 };
 
