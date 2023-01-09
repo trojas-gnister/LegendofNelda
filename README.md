@@ -5,7 +5,7 @@ The Legend of Nelda (definitely not a rip off of Zelda)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Description
-for this project we used phaser3 to create a side-scroller video game that uses a SQL database to track and store high scores and node and express.js for web functionality.
+for this project we used phaser3 to create a side-scroller video game that uses a SQL database to track and store high scores and node and express.js for web functionality. We also used handlebars as a template engine. BCrypt was used for password encryption.
 
 # Table of Contents 
 * [Installation](#-Installation)
