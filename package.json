@@ -1,7 +1,7 @@
 {
   "name": "legendofnelda",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Legend of Nelda (definitely not a rip off of Zelda)\r [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
   "main": "app.js",
   "dependencies": {
     "abab": "^2.0.6",
@@ -201,6 +201,7 @@
     "saxes": "^6.0.0",
     "send": "^0.18.0",
     "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2",
     "serve-static": "^1.15.0",
     "setprototypeof": "^1.2.0",
     "sha.js": "^2.4.11",
@@ -266,5 +267,6 @@
   "bugs": {
     "url": "https://github.com/iskry/lost-chocobos/issues"
   },
-  "homepage": "https://github.com/iskry/lost-chocobos#readme"
+  "homepage": "https://github.com/iskry/lost-chocobos#readme",
+  "devDependencies": {}
 }
