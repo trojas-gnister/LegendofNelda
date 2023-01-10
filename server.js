@@ -11,7 +11,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = express();
 const hbs = exphbs.create();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 const sess = {
   secret: 'Super secret secret',
@@ -47,6 +47,6 @@ sequelize.sync({ force: false }).then(() => {
 app.use(express.static(__dirname + '/public'));
 
 
-app.listen(8080, () => {
-  console.log('Server listening on http://localhost:8080');
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
