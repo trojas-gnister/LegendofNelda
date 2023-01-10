@@ -33,7 +33,12 @@ const config = {
 const game = new Phaser.Game(config)
 
 scene.init = function() {
-	this.score = 0;
+   if (localStorage.getItem("score") === null) {
+    localStorage.setItem("score", 0);
+    this.score = 0;
+  } else {
+    this.score = localStorage.getItem("score");
+  };
   document.getElementById("score").innerHTML = this.score;
 	this.lives = 3;
   document.getElementById("lives").innerHTML = this.lives;
@@ -126,16 +131,17 @@ scene.update = function() {
   var cursors = this.input.keyboard.createCursorKeys();
   if (cursors.right.isDown) {
     player.x += this.speed;
-    player.play('run')
+    player.play('run', true)
     
   }
   if (cursors.up.isDown) {
-    player.play('attack')
+    player.play('attack', true)
     if (Phaser.Geom.Intersects.RectangleToRectangle(player.getBounds(), this.shroom.getBounds())) {
-      this.score++;
+      this.shroom.x -= 300
       this.shroom.destroy()
+      this.score++;
+      localStorage.setItem("score", this.score);
       this.scoreText.setText("Score: " + this.score);
-      updateDatabase(this.score, )
       document.getElementById("score").innerHTML = this.score;
     }
   } 
