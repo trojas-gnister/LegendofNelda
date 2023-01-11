@@ -36,9 +36,8 @@ app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/public', express.static(__dirname + '/public' ));
-app.use('/public/img', express.static(__dirname + '/public/img' ));
-
+process.env.PWD = process.cwd();
+app.use(express.static(path.join(process.env.PWD, 'public')));
 
 
 app.use(routes);
