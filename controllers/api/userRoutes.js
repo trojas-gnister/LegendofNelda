@@ -59,17 +59,22 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.post("/signup", function (req, res) {
+router.post("/signup", async function (req, res) {
   console.log(req.body)
-  db.User.create({
+  try {
+    const user = await db.User.create(req.body, {
       name: req.body.name,
       password: req.body.password,
-      score: 0
-  }).then(() => {
-    res.render('login');
-  }).catch((error) => {
-    console.log(error);
-});
+    })
+    console.log(req.session)
+    req.session.isLoggedIn = true;
+    req.session.userId = user.id;
+    req.session.save(() => res.json({ id: user.id }));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+
 });
 
 router.post("/game", function (req, res) {
