@@ -40,6 +40,7 @@ app.use('/public', express.static(__dirname + '/public' ));
 app.use('/public/img', express.static(__dirname + '/public/img' ));
 
 
+
 app.use(routes);
 
 
