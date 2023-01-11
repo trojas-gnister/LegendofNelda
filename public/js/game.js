@@ -53,7 +53,7 @@ scene.init = function() {
 
 scene.preload = function() {
   this.load.image('background', './img/sprites/map.png');  
-  this.load.image('shroom', './img/sprites/shroom.png');
+  this.load.image('shroom', './img/sprites/shroom1.png');
   this.load.atlas("adventurer", "adventurer.png", "adventurer.json");
 
 
