@@ -37,11 +37,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-process.env.PWD = process.cwd();
-app.use(express.static(path.join(process.env.PWD, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', routes);
 
-app.use(routes);
 
 
 // connect db and listen
