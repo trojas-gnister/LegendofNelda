@@ -256,6 +256,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "engines": {
+    "node": "19.0.0",
+    "npm": "8.19.2"
+} ,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iskry/lost-chocobos.git"
