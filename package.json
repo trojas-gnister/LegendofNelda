@@ -256,7 +256,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "16.0.0",
+    "node": "16.14.1",
     "npm": "8.19.2"
   },
   "repository": {
