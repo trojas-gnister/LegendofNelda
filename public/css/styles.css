@@ -86,6 +86,22 @@ nav ul li a:hover{
     margin-top: 20px;
 }
 
+table {
+  padding: 20px;
+  margin: 0 auto; /* center the table on the page */
+}
+
+td {
+  padding: 20px;
+  color: white;
+  border: 1px solid white;
+}
+
+h1{
+  color: white;
+
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -120,10 +136,7 @@ nav ul li a:hover{
    * Correct the font size and margin on `h1` elements within `section` and
    * `article` contexts in Chrome, Firefox, and Safari.
    */
-  h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
-  }
+
   
   /* Grouping content
      ========================================================================== */
