@@ -5,7 +5,10 @@ const htmlRoutes = require('./controllers/routes/htmlRoutes');
 const PORT = process.env.PORT || 3001;
 
 
+const PORT = process.env.PORT || 8080;
 const app = express();
+
+app.use(sessionMiddleware);
 const hbs = exphbs.create();
 
 app.use(express.static('public'));

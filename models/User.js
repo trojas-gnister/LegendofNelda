@@ -30,6 +30,7 @@ User.init(
     score: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
   },
   {
