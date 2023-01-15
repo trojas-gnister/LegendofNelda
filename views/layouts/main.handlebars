@@ -15,9 +15,10 @@
                 <img src="img/Nelda.png" alt="Legend of Zelda Logo" width="270px" height="112px">
                     <nav>
                         <ul>
-                        {{#if logged_in}}
+                        {{#unless  logged_in}}
                             <li><a class="no-button" id="logout">logout</a></li>
-                        {{else}}
+                        {{/unless}}
+                        {{#if logged_in}}
                             <li><a href="/login">Log In</a></li>
                             <li><a href="/signup">Signup</a></li>
                         {{/if}}
@@ -34,11 +35,11 @@
         </section>
     </footer>   
     </section>
-{{#if logged_in}}
+{{#unless user}}
 <script type= "module" type="text/javascript" src="/js/logout.js"></script>
 <script type= "module" type="text/javascript" src="/js/game.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.23.0/phaser.js"></script>
-{{/if}}
+{{/unless}}
 
 
 </body>

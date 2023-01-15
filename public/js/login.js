@@ -7,15 +7,14 @@ const loginFormHandler = async (event) => {
 
   if (name && password) {
     // Send a POST request to the API endpoint
-    const response = await fetch('/api/users/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({ name, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-      // If successful, redirect the browser to the profile page
-      document.location.replace('/');
+      document.location.replace('/game');
     } else {
       alert(response.statusText);
     }
