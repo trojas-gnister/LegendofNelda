@@ -76,6 +76,81 @@ router.post("/logout", (req, res) => {
   }
 });
 
+router.post('/update-score', async (req, res) => {
+    try {
+      // Find the user in the database by their session ID
+      const user = await User.findByPk(req.session.user_id);
+      // Update the user's score in the database
+      await user.update({ score: req.body.score });
+      res.status(200).json({ message: 'Score updated successfully' });
+    } catch (err) {
+      res.status(500).json({ message: 'Error updating score' });
+    }
+});
+
+router.put('/update-score', async (req, res) => {
+    try {
+        const { score, id } = req.body;
+        const user = await User.findByPk(id);
+        user.score = score;
+        await user.save();
+        res.json({ message: 'Score updated!' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error updating score' });
+    }
+});
+
+router.get('/user/:id/score', async (req, res) => {
+    console.log(req)
+    try {
+      // Find the user in the database by their id
+      const user = await User.findByPk(req.params.id);
+      // Send the user's score back in the response
+      res.json({ score: user.score });
+    } catch (err) {
+      // Handle any errors that occurred
+      console.error(err);
+      res.status(500).json({ message: 'An error occurred while retrieving the user\'s score' });
+    }
+  });
+
+  router.get("/users/:id", (req, res) => {
+
+    db.User.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(user => {
+
+        res.json(user);
+    });
+});
+
+router.get("/users/current", (req, res) => {
+
+    // Check if user is logged in
+    if (req.session.logged_in) {
+    // Send the user's data
+        User.findOne({
+            where: {
+                id: req.session.user_id,
+                score: req.session.score
+            }
+        }).then(data => {
+            res.json(data);
+        });
+    } else {
+    // Send an error message indicating that the user is not logged in
+        res.status(404).json({
+            message: "User not logged in"
+        });
+    }
+});
+
+
+
+
+// export the router
 module.exports = router;
 
-// This route exports the router object that contains all the routes defined above so that it can be used by other parts of the application.

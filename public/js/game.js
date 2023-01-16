@@ -1,22 +1,14 @@
 var scene = new Phaser.Scene("game");
-var player;
-
-const updateDatabase = (score, id) => {
-  var updatedGame = {
-    score: score,
-  };
-  $.ajax({
-    method: "PUT",
-    url: "/game/" + id,
-    data: updatedGame,
+let score = await fetch("/api/users/current")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data.score);
+    return data.score;
   })
-    .then((data) => {
-      location.assign("/");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+  .catch((error) => console.error("Error fetching user name:", error));
+
+var player;
+var shroom;
 
 const config = {
   width: 640,
@@ -31,18 +23,19 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+const resetScene = () => {
+  player.x = 50;
+  player.y = 238;
+  shroom.x = 500;
+  shroom.y = 238;
+};
+
 scene.init = function () {
-  if (localStorage.getItem("score") === null) {
-    localStorage.setItem("score", 0);
-    this.score = 0;
-  } else {
-    this.score = localStorage.getItem("score");
-  }
+  this.score = score;
   document.getElementById("score").innerHTML = this.score;
   this.lives = 3;
   document.getElementById("lives").innerHTML = this.lives;
-  this.speed = 1.5;
-  this.shroom_move = 1;
+  this.speed = 3.5;
   this.score_text;
   this.lives_text;
 };
@@ -88,10 +81,10 @@ scene.create = function () {
       prefix: "run",
       suffix: ".png",
       start: 0,
-      end: 5,
+      end: 4,
       zeroPad: 1,
     }),
-    repeat: -1,
+    repeat: 0,
   });
 
   this.anims.create({
@@ -107,36 +100,70 @@ scene.create = function () {
     repeat: 0,
   });
 
+  const updateScore = (score, id) => {
+    // send a PUT request to update the score in the database
+    fetch("/api/update-score", {
+      method: "PUT",
+      body: JSON.stringify({ score, id }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   player = this.add.sprite(50, 238, "adventurer");
 
   player.play("idle");
 
-  this.shroom = this.add.sprite(500, 250, "shroom");
-  this.shroom.setScale(3.3);
+  shroom = this.add.sprite(500, 250, "shroom");
+  shroom.setScale(3.3);
 };
 
 scene.update = function () {
+  var isAttacking = false;
+
+  if (player.x > this.sys.game.config.width) {
+    resetScene();
+  }
+
+  //create a function to handle player attack
+  const playerAttack = (player, enemy) => {
+    //only attack if the player is not already attacking
+    if (!isAttacking) {
+      //set isAttacking to true
+      isAttacking = true;
+      //play the attack animation
+      player.play("attack", true);
+    }
+    //listen for the animation to complete
+    player.on("animationcomplete", () => {
+      isAttacking = false;
+    });
+  };
+
+  //in the update function
   var cursors = this.input.keyboard.createCursorKeys();
   if (cursors.right.isDown) {
     player.x += this.speed;
     player.play("run", true);
   }
   if (cursors.up.isDown) {
-    player.play("attack", true);
-    if (
-      Phaser.Geom.Intersects.RectangleToRectangle(
-        player.getBounds(),
-        this.shroom.getBounds()
-      )
-    ) {
-      this.shroom.x -= 300;
-      this.shroom.destroy();
-      this.score++;
-      localStorage.setItem("score", this.score);
-      this.scoreText.setText("Score: " + this.score);
-      document.getElementById("score").innerHTML = this.score;
-    }
+    playerAttack(player, shroom);
   }
+
+  player.on("animationcomplete", (animation, frame) => {
+    if (animation.key === "run") {
+      player.play("idle");
+    }
+    if (animation.key === "attack") {
+      player.play("idle");
+    }
+  });
 };
 
 scene.end = function () {
