@@ -19,7 +19,9 @@ for this project we used phaser3 to create a side-scroller video game that uses 
 first 'npm install' and then `npm start' to begin running on the browser.
 
 # Usage
-A fun, simple video game that can be played in your browser.
+Deployed on Heroku https://legendofnelda.herokuapp.com/
+
+A fun, simple video game that can be played in your browser. 
 
 # License 
 MIT
@@ -34,3 +36,6 @@ Use jest to run tests to ensure functionality. This project is a work-in-progres
 # Contact Information 
 * GitHub Username: danielmiller18, mar-ramg (Maria), ceca24 (Cesar), and iskry (Troy)
 * Contact Email: daniel.miller18@yahoo.com, mariaaramirez80@gmail.com, castillocesar2412@gmail.com, and troydsparks@gmail.com
+
+## **Preview**
+![Website Preview](./assets/images/screenshot.PNG)
