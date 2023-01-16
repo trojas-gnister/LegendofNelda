@@ -1,5 +1,5 @@
 
-  {{#unless user}}
+  {{#if req.session.logged_in}}
     <section class="game">
         <center><div id="gameCanvas"></div></center>
     </section>
@@ -24,4 +24,4 @@
             </ul>
         </div>
     </section>
-  {{/unless}}
+  {{/if}}

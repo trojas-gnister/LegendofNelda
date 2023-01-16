@@ -97,9 +97,12 @@ td {
   border: 1px solid white;
 }
 
-h1{
-  color: white;
 
+
+label, h1, h2{
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

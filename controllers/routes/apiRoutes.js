@@ -17,6 +17,8 @@ router.post('/login', async (req, res) => {
             return;
         }
         req.session.save(() => {
+            console.log("this worked")
+            console.log(req.session.logged_in)
             req.session.user_id = dbUserData.id;
             req.session.logged_in = true;
             res.json({ user: dbUserData, message: 'You are now logged in!' });
@@ -26,5 +28,15 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+router.post('/logout', (req, res) => {
+    if (req.session.logged_in) {
+      req.session.destroy(() => {
+        res.status(204).end();
+      });
+    } else {
+      res.status(404).end();
+    }
+  });
 
 module.exports = router;
