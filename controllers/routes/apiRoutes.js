@@ -1,42 +1,81 @@
-const router = require('express').Router(); 
-const User = require('../../models/User')
-const bodyParser = require('body-parser');
+const router = require("express").Router();
+const User = require("../../models/User");
+const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
-router.post('/login', async (req, res) => {
-    const { name, password } = req.body;
-    try{
-        const dbUserData = await User.findOne({ where: { name: name } });
-        if (!dbUserData) {
-            res.status(400).json({ message: 'No user with that email address!' });
-            return;
-        }
-        const validPassword = dbUserData.checkPassword(password);
-        if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect password!' });
-            return;
-        }
-        req.session.save(() => {
-            console.log("this worked")
-            console.log(req.session.logged_in)
-            req.session.user_id = dbUserData.id;
-            req.session.logged_in = true;
-            res.json({ user: dbUserData, message: 'You are now logged in!' });
-        });
-    } catch (err) {              
-        res.status(500).json(err);
+// Route to handle user login
+router.post("/login", async (req, res) => {
+  // get the name and password from the request body
+  const { name, password } = req.body;
+  try {
+    // Try to find a user with the provided name
+    const dbUserData = await User.findOne({ where: { name: name } });
+    if (!dbUserData) {
+      // If no user is found, respond with an error message
+      res.status(400).json({ message: "No user with that email address!" });
+      return;
     }
+    // Check if the provided password matches the hashed password in the db
+    const validPassword = dbUserData.checkPassword(password);
+    if (!validPassword) {
+      // If the password does not match, respond with an error message
+      res.status(400).json({ message: "Incorrect password!" });
+      return;
+    }
+    // Save the session and set user_id and logged_in to true
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.logged_in = true;
+      // Send a successful response
+      res.json({ user: dbUserData, message: "You are now logged in!" });
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-
-router.post('/logout', (req, res) => {
-    if (req.session.logged_in) {
-      req.session.destroy(() => {
-        res.status(204).end();
-      });
-    } else {
-      res.status(404).end();
+// Route to handle user signup
+router.post("/signup", async (req, res) => {
+  // Destructure name and password from request body
+  const { name, password } = req.body;
+  try {
+    // Check if a user already exists with the same name
+    const dbUserData = await User.findOne({ where: { name: name } });
+    if (dbUserData) {
+      // If a user already exists, return an error message
+      res.status(400).json({ message: "User already exists with that name!" });
+      return;
     }
-  });
+    // Create new user with the provided name and password
+    const user = await User.create({ name, password });
+    // Save the user's session
+    req.session.save(() => {
+      req.session.user_id = user.id;
+      req.session.logged_in = true;
+      // Respond with the new user object and a message indicating successful signup and login
+      res.json({ user, message: "You are now signed up and logged in!" });
+    });
+  } catch (err) {
+    // If there is an error, return a server error status and the error message
+    res.status(500).json(err);
+  }
+});
+
+// Route to handle user logout
+router.post("/logout", (req, res) => {
+  // Check if user is logged in
+  if (req.session.logged_in) {
+    // Destroy the session
+    req.session.destroy(() => {
+      // Send a successful status code indicating logout was successful
+      res.status(204).end();
+    });
+  } else {
+    // Send a status code indicating that the user is not logged in
+    res.status(404).end();
+  }
+});
 
 module.exports = router;
+
+// This route exports the router object that contains all the routes defined above so that it can be used by other parts of the application.

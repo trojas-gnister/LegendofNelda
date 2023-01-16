@@ -1,7 +1,13 @@
 
     <section id="news-updates">
       
+
+      <table>
+      {{#if req.session.logged_in}}
+        <center><h1>Click <a href="/game">here</a> to play!</h1></center>
+      {{else}}
     <center><h1>Please login or signup to play the game!</h1></center>
+      {{/if}}
       <table>
 
         <tr>
