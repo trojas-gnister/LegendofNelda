@@ -150,8 +150,7 @@ scene.update = function () {
   // updates this.player score. uses fetch PUT request to update score in database.
   const updateScore = (score, id) => {
     console.log(score);
-    this.scoreText.setText("Score: " + score);
-    document.getElementById("score").innerHTML = score;
+
     fetch("/api/update-score", {
       method: "PUT",
       body: JSON.stringify({ score, id }),
@@ -178,6 +177,8 @@ scene.update = function () {
       ) {
         enemy.y += 500;
         score.score += 1;
+        this.scoreText.setText("Score: " + score.score);
+        document.getElementById("score").innerHTML = score.score;
         // DEBUGGING
         // updateScore(score.score, score.id);
       }
