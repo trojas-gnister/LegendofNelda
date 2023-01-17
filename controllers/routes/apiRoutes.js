@@ -79,9 +79,11 @@ router.post("/logout", (req, res) => {
 router.post('/update-score', async (req, res) => {
     try {
       // Find the user in the database by their session ID
+      console.log(req)
       const user = await User.findByPk(req.session.user_id);
       // Update the user's score in the database
       await user.update({ score: req.body.score });
+      console.log(req.body.score)
       res.status(200).json({ message: 'Score updated successfully' });
     } catch (err) {
       res.status(500).json({ message: 'Error updating score' });
