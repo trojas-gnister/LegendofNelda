@@ -23,6 +23,7 @@ const config = {
 let score = await fetch("/api/users/current")
   .then((response) => response.json())
   .then((data) => {
+    console.log(data)
     return { score: data.score, id: data.id };
   })
   .catch((error) => console.error("Error fetching user name:", error));
