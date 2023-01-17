@@ -23,19 +23,12 @@ const config = {
 let score = await fetch("/api/users/current")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-    return { score: data.score,
-    id: data.id}
+    return { score: data.score, id: data.id };
   })
   .catch((error) => console.error("Error fetching user name:", error));
 
 // create new game
 const game = new Phaser.Game(config);
-
-// global variables
-var player;
-var shroom;
-
 
 // sets player stats and renders them on page.
 scene.init = function () {
@@ -55,21 +48,6 @@ scene.preload = function () {
   this.load.atlas("adventurer", "adventurer.png", "adventurer.json");
 };
 
-
-// resets the scene. called when player is out of bounds.
-const resetScene = () => {
-  player.x = 50;
-  player.y = 195;
-  // respawn currently not working.
-  shroomRespawn();
-};
-
-// (currently not working) respawns shroom. called when scene is reset.
-function shroomRespawn() {
-  shroom.setPosition(500, 195);
-  shroom.setVisible(true);
-}
-
 // creates the scene. this is where most of the game functionality is
 scene.create = function () {
   // renders background
@@ -80,7 +58,7 @@ scene.create = function () {
   this.ground = this.add.sprite(320, 220, "ground");
 
   // renders score and lives
-  this.scoreText = this.add.text(100, 16, "score: " + score.score, {
+  this.scoreText = this.add.text(100, 16, "Score: " + score.score, {
     fontSize: "32px",
     fill: "#fff",
   });
@@ -134,30 +112,42 @@ scene.create = function () {
   });
 
   // spawns player and plays default animation
-  player = this.physics.add.sprite(50, 195, "adventurer");
-  player.play("idle");
+  this.player = this.physics.add.sprite(50, 195, "adventurer");
+  this.player.play("idle");
 
   // spawns shroom
-  shroom = this.add.sprite(500, 195, "shroom");
+  this.enemy = this.add.sprite(500, 195, "shroom");
 
   // sets player physics
-  player.setScale(1.1);
-  shroom.setScale(1.9);
+  this.player.setScale(1.1);
+  this.enemy.setScale(1.9);
 };
 
 scene.update = function () {
+  // resets the scene. called when player is out of bounds.
+  const resetScene = () => {
+    this.player.x = 50;
+    this.player.y = 195;
+  };
+
   // sets default value for isAttacking
   var isAttacking = false;
 
+  function respawn(enemy) {
+    enemy.x = 500;
+    enemy.y = 195;
+    enemy.setVisible(true);
+  }
   // out of bounds check
-  if (player.x > this.sys.game.config.width) {
+  if (this.player.x > this.sys.game.config.width) {
     resetScene();
+    respawn(this.enemy);
+    this.enemy.setVisible(true);
   }
 
-  // updates player score. uses fetch PUT request to update score in database.
+  // updates this.player score. uses fetch PUT request to update score in database.
   const updateScore = (score, id) => {
-    score += 1;
-    console.log(score)
+    console.log(score);
     this.scoreText.setText("Score: " + score);
     document.getElementById("score").innerHTML = score;
     fetch("/api/update-score", {
@@ -167,7 +157,7 @@ scene.update = function () {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.message);
+        console.log("Success:", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -184,36 +174,37 @@ scene.update = function () {
           enemy.getBounds()
         )
       ) {
-        enemy.destroy();
         enemy.y += 500;
+        score.score += 1;
         updateScore(score.score, score.id);
       }
     }
-    player.on("animationcomplete", () => {
+    this.player.on("animationcomplete", () => {
       isAttacking = false;
     });
   };
 
   // creates cursors variable to use cursor keys
   var cursors = this.input.keyboard.createCursorKeys();
-  // player movement
+  // this.player movement
   if (cursors.right.isDown) {
-    player.x += this.speed;
-    player.play("run", true);
+    this.player.x += this.speed;
+    this.player.play("run", true);
   }
   if (cursors.space.isDown) {
-    player.play("attack", true);
+    console.log(this.player.body);
+    this.player.anims.play("attack", true);
   }
 
   // animation complete event listeners
-  player.on("animationcomplete", (animation, frame) => {
+  this.player.on("animationcomplete", (animation, frame) => {
     if (animation.key === "run") {
-      player.play("idle");
+      this.player.play("idle");
     }
 
     if (animation.key === "attack") {
-      playerAttack(player, shroom);
-      player.play("idle");
+      playerAttack(this.player, this.enemy);
+      this.player.play("idle");
     }
   });
 };
