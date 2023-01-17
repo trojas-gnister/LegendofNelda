@@ -19,14 +19,15 @@ const config = {
   },
 };
 
+let score = { score: 0, id: 0 };
+// DEBUGGING
 // fetch current user score
-let score = await fetch("/api/users/current")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data)
-    return { score: data.score, id: data.id };
-  })
-  .catch((error) => console.error("Error fetching user name:", error));
+// let score = await fetch("/api/users/current")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     return { score: data.score, id: data.id };
+//   })
+//   .catch((error) => console.error("Error fetching user name:", error));
 
 // create new game
 const game = new Phaser.Game(config);
@@ -177,7 +178,8 @@ scene.update = function () {
       ) {
         enemy.y += 500;
         score.score += 1;
-        updateScore(score.score, score.id);
+        // DEBUGGING
+        // updateScore(score.score, score.id);
       }
     }
     this.player.on("animationcomplete", () => {
