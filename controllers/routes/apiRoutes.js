@@ -91,6 +91,7 @@ router.post('/update-score', async (req, res) => {
 });
 
 router.put('/update-score', async (req, res) => {
+    console.log(req.body)
     try {
         const { score, id } = req.body;
         const user = await User.findByPk(id);
@@ -104,7 +105,7 @@ router.put('/update-score', async (req, res) => {
 });
 
 router.get('/user/:id/score', async (req, res) => {
-    console.log(req)
+
     try {
       // Find the user in the database by their id
       const user = await User.findByPk(req.params.id);
