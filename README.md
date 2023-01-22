@@ -30,8 +30,6 @@ MIT
 # Contributing 
 This game was created by Daniel Miller, Maria Ramirez, Cesar Castillo, and Troy Sparks.
 
-# Tests
-Use jest to run tests to ensure functionality. This project is a work-in-progress.
 
 # Contact Information 
 * GitHub Username: danielmiller18, mar-ramg (Maria), ceca24 (Cesar), and iskry (Troy)
