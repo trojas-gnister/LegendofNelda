@@ -77,7 +77,7 @@ scene.create = function () {
   // adds high score text to game screen
   this.highScoreText = this.add.text(
     100,
-    16,
+    65,
     "High Score: " + highScore.score,
     {
       fontSize: "32px",
@@ -86,7 +86,7 @@ scene.create = function () {
   );
 
   // adds score text to game screen
-  this.scoreText = this.add.text(100, 45, "Score: " + score, {
+  this.scoreText = this.add.text(100, 95, "Score: " + score, {
     fontSize: "32px",
     fill: "#fff",
   });
