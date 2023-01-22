@@ -38,4 +38,4 @@ Use jest to run tests to ensure functionality. This project is a work-in-progres
 * Contact Email: daniel.miller18@yahoo.com, mariaaramirez80@gmail.com, castillocesar2412@gmail.com, and troydsparks@gmail.com
 
 ## **Preview**
-![Website Preview](/public/img/screenshot.PNG)
+![Website Preview](/public/img/screenshot.png)
