@@ -6,7 +6,7 @@ router.use(bodyParser.json());
 // Route to handle user login
 router.post("/login", async (req, res) => {
   // get the name and password from the request body
-  const { name, password } = req.body;
+  const { name, password} = req.body;
   try {
     // Try to find a user with the provided name
     const dbUserData = await User.findOne({ where: { name: name } });
@@ -25,6 +25,7 @@ router.post("/login", async (req, res) => {
     // Save the session and set user_id and logged_in to true
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
+      req.session.score = dbUserData.score;
       req.session.logged_in = true;
       // Send a successful response
       res.json({ user: dbUserData, message: "You are now logged in!" });
@@ -79,11 +80,9 @@ router.post("/logout", (req, res) => {
 router.post('/update-score', async (req, res) => {
     try {
       // Find the user in the database by their session ID
-      console.log(req)
       const user = await User.findByPk(req.session.user_id);
       // Update the user's score in the database
       await user.update({ score: req.body.score });
-      console.log(req.body.score)
       res.status(200).json({ message: 'Score updated successfully' });
     } catch (err) {
       res.status(500).json({ message: 'Error updating score' });
@@ -91,7 +90,6 @@ router.post('/update-score', async (req, res) => {
 });
 
 router.put('/update-score', async (req, res) => {
-    console.log(req.body)
     try {
         const { score, id } = req.body;
         const user = await User.findByPk(id);
@@ -104,41 +102,13 @@ router.put('/update-score', async (req, res) => {
     }
 });
 
-router.get('/user/:id/score', async (req, res) => {
-
-    try {
-      // Find the user in the database by their id
-      const user = await User.findByPk(req.params.id);
-      // Send the user's score back in the response
-      res.json({ score: user.score });
-    } catch (err) {
-      // Handle any errors that occurred
-      console.error(err);
-      res.status(500).json({ message: 'An error occurred while retrieving the user\'s score' });
-    }
-  });
-
-  router.get("/users/:id", (req, res) => {
-
-    db.User.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then(user => {
-
-        res.json(user);
-    });
-});
-
 router.get("/users/current", (req, res) => {
-
     // Check if user is logged in
     if (req.session.logged_in) {
     // Send the user's data
         User.findOne({
             where: {
                 id: req.session.user_id,
-                score: req.session.score
             }
         }).then(data => {
             res.json(data);

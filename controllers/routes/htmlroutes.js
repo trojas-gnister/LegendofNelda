@@ -15,9 +15,6 @@ router.get("/login", (req, res) => {
 
 // create a GET endpoint for the root route ('/game')
 router.get("/game", (req, res) => {
-  console.log(req.session.logged_in);
-  console.log(req.session);
-
   res.render("game", { req });
 });
 

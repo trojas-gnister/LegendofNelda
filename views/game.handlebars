@@ -2,27 +2,22 @@
   {{#if req.session.logged_in}}
     <section class="game">
         <center><div id="gameCanvas"></div></center>
-        <center><h3>Defeat enemies to increase your score!</h3></center>
-        <center><h3>Move right to proceed!</h3></center>
+        <center><h3>Defeat as many enemies as you can in 60 seconds!</h3></center>
+        <center><h3>Your player will move faster after you defeat an enemy.</h3></center>
     </section>
 
     <section class="menu-bar">
-        <div class="text">
-            <p class="title">Nelda Game<p>
-            <p>My Stats</p>
+        <div class="text"  style="display: flex; justify-content: space-around;">
             <ul>
-              <li><strong>Score</strong></li>
+              <p>Stats</p>
+              <li><strong>High Score</strong></li>
+              <li id="highScore"></li>
+              <li><strong>Current Game Score</strong></li>
               <li id="score"></li>
-              <li><strong>Lives</strong></li>
-              <li id="lives"></li>
             </ul>
 
-            <p>Display Game Controls</p>
             <ul>
-            <li><strong>Move</strong></li>
-            <li> ⇒ </li>
-            <li><strong>Jump</strong></li>
-            <li> ⇑ </li>
+            <p>Controls</p>
             <li><strong>Attack</strong></li>
             <li> SPACEBAR </li>
             </ul>
