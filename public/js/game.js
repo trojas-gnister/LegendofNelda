@@ -77,7 +77,7 @@ scene.create = function () {
   // adds high score text to game screen
   this.highScoreText = this.add.text(
     100,
-    65,
+    35,
     "High Score: " + highScore.score,
     {
       fontSize: "32px",
@@ -86,7 +86,7 @@ scene.create = function () {
   );
 
   // adds score text to game screen
-  this.scoreText = this.add.text(100, 95, "Score: " + score, {
+  this.scoreText = this.add.text(100, 65, "Score: " + score, {
     fontSize: "32px",
     fill: "#fff",
   });
@@ -149,7 +149,6 @@ scene.create = function () {
         highScore.score = score;
         this.highScoreText.setText("High Score: " + highScore.score);
         document.getElementById("highScore").innerHTML = highScore.score;
-        console.log(score);
         updateScore(highScore.score, highScore.id);
       }
     },
@@ -220,7 +219,6 @@ scene.update = function () {
   // plays run animation after attack animation is complete
   this.player.once("animationcomplete", (animation, frame) => {
     if (animation.key === "attack") {
-      console.log(animation.key);
       this.player.play("run", true);
     }
   });
