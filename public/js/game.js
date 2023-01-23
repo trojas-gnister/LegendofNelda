@@ -201,7 +201,7 @@ scene.update = function () {
         score += 1;
         this.scoreText.setText("Score: " + score);
         document.getElementById("score").innerHTML = score;
-        this.speed += 0.1; 
+        this.speed += 0.3; 
       }
     }
     // resets isAttacking to false after attack animation is complete
